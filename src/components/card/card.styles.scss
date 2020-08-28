@@ -1,0 +1,19 @@
+.card {
+  display: inline-block;
+  background-color: lightblue;
+  width: 40%;
+  border: 1px solid black;
+  border-radius: 24px;
+  padding: 16px;
+  margin-right: 48px;
+  margin-bottom: 48px;
+}
+
+.card__title {
+  text-align: left;
+  font-size: 24px;
+}
+
+.card_list {
+  padding: 0;
+}
