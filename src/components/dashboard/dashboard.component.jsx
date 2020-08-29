@@ -8,7 +8,7 @@ class Dashboard extends Component {
     this.state = {
       data: [
         {
-          resolver: "sree",
+          name: "sree",
           id: 4567,
           issues: [
             {
@@ -19,7 +19,7 @@ class Dashboard extends Component {
           ],
         },
         {
-          resolver: "sai",
+          name: "sai",
           id: 45679,
           issues: [
             {
@@ -33,13 +33,44 @@ class Dashboard extends Component {
     };
   }
 
+  componentDidMount() {
+    fetch("https://api.github.com/repos/DataChatAI/ExampleRepository/issues")
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        let assignees = {};
+        res.forEach((issue) => {
+          let assignee = issue.assignee;
+          if (assignee) {
+            if (assignees[assignee.login]) {
+              assignees[assignee.login].issues.push({
+                title: issue.title,
+                id: issue.id,
+                priorityColor: "",
+              });
+            } else {
+              assignees[assignee.login] = {
+                id: assignee.id,
+                name: assignee.login,
+                issues: [
+                  { title: issue.title, id: issue.id, priorityColor: "" },
+                ],
+              };
+            }
+          }
+        });
+        console.log(Object.values(assignees));
+        this.setState({ data: Object.values(assignees) });
+      });
+  }
+
   render() {
     return (
       <div className="dashboard">
         <h1 className="dashboard__title">Daily Check In Dashboard</h1>
         <ul className="dashboard__cards">
           {this.state.data.map((el) => (
-            <Card key={el.id} resolver={el.resolver} issues={el.issues} />
+            <Card key={el.id} assignee={el.name} issues={el.issues} />
           ))}
         </ul>
       </div>

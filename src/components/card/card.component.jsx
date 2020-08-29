@@ -2,11 +2,11 @@ import React from "react";
 import "./card.styles.scss";
 import Issue from "../issue/issue.component";
 
-const Card = ({ resolver, issues }) => {
-  console.log(issues);
+const Card = ({ assignee, issues }) => {
+  //console.log(issues);
   return (
     <div className="card">
-      <div className="card__title">@{resolver}</div>
+      <div className="card__title">@{assignee}</div>
       <ul className="card_list">
         {issues.map((issue) => (
           <Issue key={issue.id} issue={issue} />
