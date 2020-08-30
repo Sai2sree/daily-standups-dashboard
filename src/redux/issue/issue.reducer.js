@@ -1,4 +1,5 @@
 import issueActionTypes from "./issue.types";
+import { filterIssues } from "./issue.util";
 
 const INITIAL_STATE = {
   currentIssues: [],
@@ -9,7 +10,7 @@ const issueReducer = (state = INITIAL_STATE, action) => {
     case issueActionTypes.SET_CURRENT_ISSUES:
       return {
         ...state,
-        currentIssues: action.payload,
+        currentIssues: filterIssues(action.payload),
       };
     default:
       return state;

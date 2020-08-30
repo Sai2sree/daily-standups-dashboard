@@ -1,20 +1,14 @@
 import React, { Component } from "react";
 import "./dashboard.styles.scss";
 import Card from "../card/card.component";
-import { filterIssues } from "./dashboard.util.js";
+import { connect } from "react-redux";
+import { setCurrentIssues } from "../../redux/issue/issue.action";
 
 class Dashboard extends Component {
-  constructor() {
-    super();
-    this.state = {
-      currentIssues: [],
-    };
-  }
-
   componentDidMount() {
     fetch("https://api.github.com/repos/DataChatAI/ExampleRepository/issues")
       .then((res) => res.json())
-      .then((res) => this.setState({ currentIssues: filterIssues(res) }));
+      .then((result) => this.props.setCurrentIssues(result));
   }
 
   render() {
@@ -22,7 +16,7 @@ class Dashboard extends Component {
       <div className="dashboard">
         <h1 className="dashboard__title">Daily Check In Dashboard</h1>
         <ul className="dashboard__cards">
-          {this.state.currentIssues.map((el) => (
+          {this.props.currentIssues.map((el) => (
             <Card key={el.id} assignee={el.name} issues={el.issues} />
           ))}
         </ul>
@@ -31,4 +25,13 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+const mapStateToProps = (state) => ({
+  currentIssues: state.issue.currentIssues,
+});
+
+const dispatchStateToProps = (dispatch) => ({
+  setCurrentIssues: (currentIssues) =>
+    dispatch(setCurrentIssues(currentIssues)),
+});
+
+export default connect(mapStateToProps, dispatchStateToProps)(Dashboard);
