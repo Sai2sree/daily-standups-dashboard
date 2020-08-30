@@ -1,4 +1,6 @@
-.card {
+import styled from "styled-components";
+
+export const CardContainer = styled.div`
   display: inline-block;
   background-color: lightblue;
   width: 40%;
@@ -7,13 +9,13 @@
   padding: 16px;
   margin-right: 48px;
   margin-bottom: 48px;
-}
+`;
 
-.card__title {
+export const CardTitleContainer = styled.div`
   text-align: left;
   font-size: 24px;
-}
+`;
 
-.card_list {
+export const CardListContainer = styled.ul`
   padding: 0;
-}
+`;

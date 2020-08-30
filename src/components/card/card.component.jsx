@@ -1,16 +1,20 @@
 import React from "react";
-import "./card.styles.scss";
 import Issue from "../issue/issue.component";
+import {
+  CardContainer,
+  CardTitleContainer,
+  CardListContainer,
+} from "./card.styles";
 
 const Card = ({ assignee, issues }) => (
-  <div className="card">
-    <div className="card__title">@{assignee}</div>
-    <ul className="card_list">
+  <CardContainer>
+    <CardTitleContainer>@{assignee}</CardTitleContainer>
+    <CardListContainer>
       {issues.map((issue) => (
         <Issue key={issue.id} issue={issue} />
       ))}
-    </ul>
-  </div>
+    </CardListContainer>
+  </CardContainer>
 );
 
 export default Card;
