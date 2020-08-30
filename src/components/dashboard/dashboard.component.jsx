@@ -1,13 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./dashboard.styles.scss";
 import Card from "../card/card.component";
 import { connect } from "react-redux";
 import { fetchIssuesStartAsync } from "../../redux/issue/issue.action";
 
 const Dashboard = ({ fetchIssuesStartAsync, currentIssues }) => {
+  const [endPoint] = useState(
+    "https://api.github.com/repos/DataChatAI/ExampleRepository/issues"
+  );
+
   useEffect(() => {
-    fetchIssuesStartAsync();
-  }, [fetchIssuesStartAsync]);
+    fetchIssuesStartAsync(endPoint);
+  }, [fetchIssuesStartAsync, endPoint]);
 
   return (
     <div className="dashboard">
@@ -26,7 +30,8 @@ const mapStateToProps = (state) => ({
 });
 
 const dispatchStateToProps = (dispatch) => ({
-  fetchIssuesStartAsync: () => dispatch(fetchIssuesStartAsync()),
+  fetchIssuesStartAsync: (endPoint) =>
+    dispatch(fetchIssuesStartAsync(endPoint)),
 });
 
 export default connect(mapStateToProps, dispatchStateToProps)(Dashboard);

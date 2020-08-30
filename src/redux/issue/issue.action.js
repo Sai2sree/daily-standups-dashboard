@@ -14,9 +14,9 @@ export const fetchIssuesFailure = (errorMessage) => ({
   payload: errorMessage,
 });
 
-export const fetchIssuesStartAsync = () => {
+export const fetchIssuesStartAsync = (endPoint) => {
   return (dispatch) => {
-    fetch("https://api.github.com/repos/DataChatAI/ExampleRepository/issues")
+    fetch(endPoint)
       .then((res) => res.json())
       .then((result) => dispatch(fetchIssuesSuccess(result)))
       .catch((error) => dispatch(fetchIssuesFailure(error.message)));
