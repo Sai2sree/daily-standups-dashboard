@@ -37,29 +37,34 @@ class Dashboard extends Component {
     fetch("https://api.github.com/repos/DataChatAI/ExampleRepository/issues")
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
         let assignees = {};
         res.forEach((issue) => {
           let assignee = issue.assignee;
           if (assignee) {
-            if (assignees[assignee.login]) {
-              assignees[assignee.login].issues.push({
-                title: issue.title,
-                id: issue.id,
-                priorityColor: "",
-              });
-            } else {
-              assignees[assignee.login] = {
-                id: assignee.id,
-                name: assignee.login,
-                issues: [
-                  { title: issue.title, id: issue.id, priorityColor: "" },
-                ],
-              };
+            let issues = [];
+            issue.labels.forEach((label) => {
+              if (label.name === "I'm On It!") {
+                issues.push({
+                  title: issue.title,
+                  id: issue.id,
+                  priorityColor: "",
+                });
+              }
+            });
+            if (issues.length) {
+              if (assignees[assignee.login]) {
+                assignees[assignee.login].issues.push(...issues);
+              } else {
+                assignees[assignee.login] = {
+                  id: assignee.id,
+                  name: assignee.login,
+                  issues: issues,
+                };
+              }
             }
           }
         });
-        console.log(Object.values(assignees));
+        //console.log(Object.values(assignees));
         this.setState({ data: Object.values(assignees) });
       });
   }
