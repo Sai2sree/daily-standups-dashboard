@@ -1,11 +1,20 @@
 .issue {
+  display: flex;
   list-style-type: none;
   background-color: white;
   border: 1px solid black;
   border-radius: 8px;
   max-width: 80%;
   padding: 16px;
-  margin-right: 0;
-  margin-left: auto;
+  margin: 16px 0 0 auto;
   text-align: left;
+}
+
+.issue__title {
+  max-width: 80%;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 4px;
 }
