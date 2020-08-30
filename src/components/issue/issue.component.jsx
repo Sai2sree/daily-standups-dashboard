@@ -1,11 +1,11 @@
 import React from "react";
-import "./issue.styles.scss";
+import { IssueTitleContainer, IssueContainer } from "./issue.styles";
 
 const Issue = ({ issue: { title, id, priorityColor } }) => (
-  <li style={{ backgroundColor: `#${priorityColor}` }} className="issue">
-    <span className="issue__title">{title}</span>
+  <IssueContainer style={{ backgroundColor: `#${priorityColor}` }}>
+    <IssueTitleContainer>{title}</IssueTitleContainer>
     <span> #{id}</span>
-  </li>
+  </IssueContainer>
 );
 
 export default Issue;
