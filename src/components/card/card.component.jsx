@@ -3,7 +3,6 @@ import "./card.styles.scss";
 import Issue from "../issue/issue.component";
 
 const Card = ({ assignee, issues }) => {
-  //console.log(issues);
   return (
     <div className="card">
       <div className="card__title">@{assignee}</div>

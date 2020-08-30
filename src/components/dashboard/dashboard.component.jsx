@@ -6,30 +6,7 @@ class Dashboard extends Component {
   constructor() {
     super();
     this.state = {
-      data: [
-        {
-          name: "sree",
-          id: 4567,
-          issues: [
-            {
-              title: "Medium priority issue",
-              id: 12345,
-              color: "#f9d0c4",
-            },
-          ],
-        },
-        {
-          name: "sai",
-          id: 45679,
-          issues: [
-            {
-              title: "High priority issue",
-              id: 123458,
-              color: "#b60205",
-            },
-          ],
-        },
-      ],
+      data: [],
     };
   }
 
@@ -42,6 +19,7 @@ class Dashboard extends Component {
           let assignee = issue.assignee;
           if (assignee) {
             let issues = [];
+            let priorityColor = "";
             issue.labels.forEach((label) => {
               if (label.name === "I'm On It!") {
                 issues.push({
@@ -49,9 +27,14 @@ class Dashboard extends Component {
                   id: issue.id,
                   priorityColor: "",
                 });
+              } else {
+                if (label.name.includes("Priority")) {
+                  priorityColor = label.color;
+                }
               }
             });
             if (issues.length) {
+              issues[0].priorityColor = priorityColor;
               if (assignees[assignee.login]) {
                 assignees[assignee.login].issues.push(...issues);
               } else {
@@ -64,7 +47,7 @@ class Dashboard extends Component {
             }
           }
         });
-        //console.log(Object.values(assignees));
+        console.log(Object.values(assignees));
         this.setState({ data: Object.values(assignees) });
       });
   }
