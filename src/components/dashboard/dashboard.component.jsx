@@ -2,13 +2,12 @@ import React, { Component } from "react";
 import "./dashboard.styles.scss";
 import Card from "../card/card.component";
 import { connect } from "react-redux";
-import { setCurrentIssues } from "../../redux/issue/issue.action";
+import { fetchIssuesStartAsync } from "../../redux/issue/issue.action";
 
 class Dashboard extends Component {
   componentDidMount() {
-    fetch("https://api.github.com/repos/DataChatAI/ExampleRepository/issues")
-      .then((res) => res.json())
-      .then((result) => this.props.setCurrentIssues(result));
+    const { fetchIssuesStartAsync } = this.props;
+    fetchIssuesStartAsync();
   }
 
   render() {
@@ -30,8 +29,7 @@ const mapStateToProps = (state) => ({
 });
 
 const dispatchStateToProps = (dispatch) => ({
-  setCurrentIssues: (currentIssues) =>
-    dispatch(setCurrentIssues(currentIssues)),
+  fetchIssuesStartAsync: () => dispatch(fetchIssuesStartAsync()),
 });
 
 export default connect(mapStateToProps, dispatchStateToProps)(Dashboard);
