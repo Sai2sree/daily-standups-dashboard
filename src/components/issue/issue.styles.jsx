@@ -3,7 +3,8 @@ import styled from "styled-components";
 export const IssueContainer = styled.li`
   display: flex;
   list-style-type: none;
-  background-color: white;
+  background-color: ${({ priorityColor }) =>
+    priorityColor ? `#${priorityColor}` : "white"};
   border: 1px solid black;
   border-radius: 8px;
   max-width: 80%;
