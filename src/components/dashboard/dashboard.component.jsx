@@ -16,25 +16,30 @@ class Dashboard extends Component {
       .then((res) => {
         let assignees = {};
         res.forEach((issue) => {
-          let assignee = issue.assignee;
-          if (assignee) {
-            let issues = [];
-            let priorityColor = "";
-            issue.labels.forEach((label) => {
-              if (label.name === "I'm On It!") {
-                issues.push({
-                  title: issue.title,
-                  id: issue.id,
-                  priorityColor: "",
-                });
-              } else {
-                if (label.name.includes("Priority")) {
-                  priorityColor = label.color;
+          let today = new Date();
+          let twoMonthsOldDate = today.setMonth(today.getMonth() - 2);
+          let issueCreationDate = issue["created_at"];
+          if (Date.parse(issueCreationDate) > twoMonthsOldDate) {
+            let assignee = issue.assignee;
+            if (assignee) {
+              let issues = [];
+              let priorityColor = "";
+              issue.labels.forEach((label) => {
+                if (label.name === "I'm On It!") {
+                  issues.push({
+                    title: issue.title,
+                    id: issue.id,
+                    priorityColor: "",
+                  });
+                } else {
+                  if (label.name.includes("Priority")) {
+                    priorityColor = label.color;
+                  }
                 }
+              });
+              if (issues.length) {
+                issues[0].priorityColor = priorityColor;
               }
-            });
-            if (issues.length) {
-              issues[0].priorityColor = priorityColor;
               if (assignees[assignee.login]) {
                 assignees[assignee.login].issues.push(...issues);
               } else {
@@ -47,7 +52,6 @@ class Dashboard extends Component {
             }
           }
         });
-        console.log(Object.values(assignees));
         this.setState({ data: Object.values(assignees) });
       });
   }
