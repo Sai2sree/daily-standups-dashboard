@@ -5,8 +5,9 @@ import { connect } from "react-redux";
 import { fetchIssuesStartAsync } from "../../redux/issue/issue.action";
 
 const Dashboard = ({ fetchIssuesStartAsync, currentIssues }) => {
+  const [repository] = useState("ExampleRepository");
   const [endPoint] = useState(
-    "https://api.github.com/repos/DataChatAI/ExampleRepository/issues"
+    `https://api.github.com/repos/DataChatAI/${repository}/issues`
   );
 
   useEffect(() => {
