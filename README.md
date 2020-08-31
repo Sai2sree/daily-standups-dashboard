@@ -37,3 +37,7 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
+## Next Steps
+- Provide a select component on the dashboard to allow users to select a repository.
+- Provide a filter component on the dashboard to allow users to filter issues based on priority.
+- Implement Authentication & Authorization using OAuth2.0.
